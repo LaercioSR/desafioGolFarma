@@ -1,0 +1,147 @@
+#img-logo {
+    height: 15%;
+    width: 15%;
+}
+
+#image-logo {
+    image: url("../imagens/logo3.png");
+}
+
+#navbar-tasknow {
+    background-color: #FF8B00!important;
+}
+
+.button-link {
+    font-size: 125%;
+    color: white!important;
+}
+
+.button-link:hover {
+    color: #E8650C!important;
+}
+
+.card-tasknow {
+    background-color: #FF9415!important;
+    color: white;
+}
+
+.navbar-padrao {
+    font-size: 120%;
+    font-weight: bold;
+    color: white!important;
+}
+
+.navbar-padrao:hover {
+    color: #E8650C!important;
+}
+
+#texto-linha {
+    display: inline;
+}
+
+.content-tasknow {
+    margin-top: 50px;
+}
+
+.centralizar {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+
+.descricao {
+    font-size: 20px;
+}
+
+.pos-titulo {
+    margin-top: 25px;
+}
+
+.titulo-texto {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.form-image {
+    position: absolute;
+    right: 0;
+}
+
+.button-mais {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    height: 70px;
+    width: 70px;
+}
+
+.color-tasknow {
+    color: #FF8B00;
+}
+
+.range-tasknow {
+    -webkit-appearance: none;
+    height: 10px;
+    width: 30px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.range-tasknow::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FF8B00;
+    cursor: pointer;
+}
+
+.range-tasknow::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.range-tasknow::-webkit-slider-thumb:hover {
+    background: #E8650C;
+}
+
+textarea {
+    resize: none;
+}
+
+#img-icon {
+    width: 35%;
+    height: 35%;
+}
+
+.label-descricao {
+    font-weight: bold;
+}
+
+.btn-tasknow {
+    background-color: #FF8B00;
+    color: white;
+}
+
+.btn-tasknow:hover {
+    background-color: #E8650C;
+    color: white;
+}
+
+.btn-tasknowdelete {
+    background-color: #FFB149;
+    color: white;
+}
+
+.btn-tasknowdelete:hover {
+    background-color: #FF8B00;
+}
