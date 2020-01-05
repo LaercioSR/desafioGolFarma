@@ -6,6 +6,7 @@ use App\Especialidade;
 use App\Medico;
 use App\MedicoEspecialidade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MedicoController extends Controller
 {
@@ -82,9 +83,12 @@ class MedicoController extends Controller
      * @param  \App\Medico  $medico
      * @return \Illuminate\Http\Response
      */
-    public function edit(Medico $medico)
+    public function edit($id)
     {
-        //
+        $medico = Medico::findOrFail($id);
+        $especialidades = Especialidade::all();
+
+        return view('editarMedico', compact('medico'), compact('especialidades'));
     }
 
     /**
@@ -96,7 +100,32 @@ class MedicoController extends Controller
      */
     public function update(Request $request, Medico $medico)
     {
-        //
+        $medico->nome = $request->input('nome');
+        $medico->crm = $request->input('crm');
+        $medico->telefone = $request->input('telefone');
+        $medico->save();
+
+        $especialidades = DB::table('medico_especialidades')->where('idMedico', $medico->id)->get();
+
+        foreach($especialidades as $especialidade) {
+            MedicoEspecialidade::findOrFail($especialidade->id)->delete();
+        }
+
+        if($request->input('especialidade1') != 0) {
+            $medicoEspecialidade = new MedicoEspecialidade();
+            $medicoEspecialidade->idMedico = $medico->id;
+            $medicoEspecialidade->idEspecialidade = $request->input('especialidade1');
+            $medicoEspecialidade->save();
+        }
+
+        if($request->input('especialidade2') != 0) {
+            $medicoEspecialidade = new MedicoEspecialidade();
+            $medicoEspecialidade->idMedico = $medico->id;
+            $medicoEspecialidade->idEspecialidade = $request->input('especialidade2');
+            $medicoEspecialidade->save();
+        }
+
+        return redirect("/");
     }
 
     /**
@@ -111,5 +140,9 @@ class MedicoController extends Controller
         $medico->delete();
 
         return redirect('/');
+    }
+
+    public function pesquisarMedico(Request $request) {
+        $medico = DB::table('medicos')->where('nome', $request->pesquisar)->orWhere('crm', $request->pesquisar);
     }
 }
