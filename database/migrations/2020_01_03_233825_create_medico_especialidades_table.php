@@ -15,10 +15,10 @@ class CreateMedicoEspecialidadesTable extends Migration
     {
         Schema::create('medico_especialidades', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_medico');
-            $table->unsignedBigInteger('id_especialidade');
-            $table->foreign('id_medico')->references('id')->on('medicos');
-            $table->foreign('id_especialidade')->references('id')->on('especialidades');
+            $table->unsignedBigInteger('idMedico');
+            $table->unsignedBigInteger('idEspecialidade');
+            $table->foreign('idMedico')->references('id')->on('medicos')->onDelete('cascade');;
+            $table->foreign('idEspecialidade')->references('id')->on('especialidades')->onDelete('cascade');;
             $table->timestamps();
         });
     }

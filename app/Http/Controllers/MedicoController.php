@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Especialidade;
 use App\Medico;
+use App\MedicoEspecialidade;
 use Illuminate\Http\Request;
 
 class MedicoController extends Controller
@@ -14,7 +16,9 @@ class MedicoController extends Controller
      */
     public function index()
     {
-        //
+        $medicos = Medico::all();
+
+        return view('welcome', compact('medicos'));
     }
 
     /**
@@ -24,7 +28,9 @@ class MedicoController extends Controller
      */
     public function create()
     {
-        //
+        $especialidades = Especialidade::all();
+
+        return view('cadastrarMedico', compact('especialidades'));
     }
 
     /**
@@ -35,7 +41,28 @@ class MedicoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $medico = new Medico();
+        $medico->nome = $request->input('nome');
+        $medico->crm = $request->input('crm');
+        $medico->telefone = $request->input('telefone');
+        $medico  ->save();
+
+
+        if($request->input('especialidade1') != 0) {
+            $medicoEspecialidade = new MedicoEspecialidade();
+            $medicoEspecialidade->idMedico = $medico->id;
+            $medicoEspecialidade->idEspecialidade = $request->input('especialidade1');
+            $medicoEspecialidade->save();
+        }
+
+        if($request->input('especialidade2') != 0) {
+            $medicoEspecialidade = new MedicoEspecialidade();
+            $medicoEspecialidade->idMedico = $medico->id;
+            $medicoEspecialidade->idEspecialidade = $request->input('especialidade2');
+            $medicoEspecialidade->save();
+        }
+
+        return redirect("/");
     }
 
     /**
@@ -78,8 +105,11 @@ class MedicoController extends Controller
      * @param  \App\Medico  $medico
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Medico $medico)
+    public function destroy($id)
     {
-        //
+        $medico = Medico::findOrFail($id);
+        $medico->delete();
+
+        return redirect('/');
     }
 }

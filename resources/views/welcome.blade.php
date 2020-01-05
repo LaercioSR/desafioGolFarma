@@ -26,29 +26,50 @@
                 <div class="col-md-8">
                     <br/>
                     <br/>
-                    <h1>Médicos</h1>
+                    <!--<h1>Médicos</h1>-->
 
 
                     <table class="table table-light">
                         <thead class="thead-light">
                         <tr>
-                            <th scope="col" colspan="2">Nome</th>
+
+                            <th scope="col" colspan="3">Médicos</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {{--
-                        @if(count($tiposTarefasUser) == 0)
+                        @if(count($medicos) == 0)
                             <tr>
-                                <td>Não existe médico cadastrados</td>
+                                <td>Não há médicos cadastrados</td>
                             </tr>
                         @else
-                            @foreach($tiposTarefasUser as $tipoTarefa)
+                            @foreach($medicos as $medico)
                                 <tr>
-                                    <td>{{$tipoTarefa->descricao}}</td>
                                     <td>
-                                        <form action = "{{route('tipotarefa.destroy', $tipoTarefa->id)}}" method = "POST">
+                                        <form>
+                                            <div class="row">
+                                                <label class="label-descricao col-md-2" for="nome">Nome: </label>
+                                                <p id="nome" class="col-md-10">{{ $medico->nome }}</p>
+                                            </div>
+
+                                            <div class="row">
+                                                <label class="label-descricao col-md-1" for="crm">CRM: </label>
+                                                <p id="crm" class="col-md-6">{{ $medico->crm }}</p>
+
+                                                <label class="label-descricao col-md-2" for="telefone">Telefone: </label>
+                                                <p id="telefone" class="col-md-3">{{ $medico->telefone }}</p>
+                                            </div>
+                                            <div class="row">
+                                                <label class="label-descricao col-md-4" for="especialidades">Especialidades: </label>
+                                                @foreach($medico->especialidades as $especialidade)
+                                                    <p id="especialidade" class="col-md-4">{{ $especialidade->descricao }}</p>
+                                                @endforeach
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action = "{{route('medico.destroy', $medico->id)}}" method = "POST">
                                             @csrf
-                                            <a class = "btn" href="{{route('tipotarefa.edit', $tipoTarefa->id)}}"><img src="{{ asset('imagens/edit.png') }}" title="Editar"></a>
+                                            <a class = "btn" href="{{route('medico.edit', $medico->id)}}"><img src="{{ asset('imagens/edit.png') }}" title="Editar"></a>
                                             @method('DELETE')
                                             <button type = "submit" class = "btn btn-link"><img src="{{ asset('imagens/delete.png') }}" title="Excluir"></button>
                                         </form>
@@ -56,8 +77,6 @@
                                 </tr>
                             @endforeach
                         @endif
-                        php>
-                        --}}
                         </tbody>
                     </table>
 
@@ -66,6 +85,6 @@
             </div>
         </div>
 
-        <a class = "btn" href=""><img src="{{ asset('imagens/mais.png') }}" class="button-mais"/></a>
+        <a class = "btn" href="{{route('medico.create')}}"><img src="{{ asset('imagens/mais.png') }}" class="button-mais"/></a>
     </body>
 </html>
