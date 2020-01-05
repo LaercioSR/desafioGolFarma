@@ -16,7 +16,7 @@ class CreateMedicosTable extends Migration
         Schema::create('medicos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome');
-            $table->string('crm', 13);
+            $table->string('crm', 13)->unique();
             $table->string('telefone', 15);
             $table->timestamps();
         });

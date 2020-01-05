@@ -7,7 +7,9 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>Desafio GolFarma</title>
+        <title>Desafio GolFarma - @if($medico != null)
+                {{$medico->nome}}
+        @endif</title>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
@@ -24,10 +26,10 @@
         <div class="container content-tasknow">
             <div class="row justify-content-center">
                 <div class="col-md-7">
-                    <form class="form-inline my-2 my-lg-0" action="/medico/pesquisar" method = "GET">
+                    <form class="form-inline" action="/medico/pesquisa" method = "post">
                         @csrf
-                        <input class="form-control mr-sm-2 col-md-8" type="search" placeholder="Pesquisar CRM ou Nome" aria-label="pesquisar">
-                        <button class="btn btn-danger my-2 my-sm-0 col-md-3" type="submit">Pesquisar</button>
+                        <input class="form-control mr-sm-2 col-md-8" type="text" placeholder="Pesquisar CRM ou Nome" id="pesquisa" name="pesquisa"  value="">
+                        <button class="btn btn-danger col-md-3" type="submit">Pesquisar</button>
                     </form>
                 </div>
             </div>
@@ -42,49 +44,47 @@
                         <thead class="thead-light">
                         <tr>
 
-                            <th scope="col" colspan="3">Médicos</th>
+                            <th scope="col" colspan="3">Médico</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @if(count($medicos) == 0)
+                        @if($medico == null)
                             <tr>
-                                <td>Não há médicos cadastrados</td>
+                                <td>Médico não encontrado</td>
                             </tr>
                         @else
-                            @foreach($medicos as $medico)
-                                <tr>
-                                    <td>
-                                        <form>
-                                            <div class="row">
-                                                <label class="label-descricao col-md-2" for="nome">Nome: </label>
-                                                <p id="nome" class="col-md-10">{{ $medico->nome }}</p>
-                                            </div>
+                            <tr>
+                                <td>
+                                    <form>
+                                        <div class="row">
+                                            <label class="label-descricao col-md-2" for="nome">Nome: </label>
+                                            <p id="nome" class="col-md-10">{{ $medico->nome }}</p>
+                                        </div>
 
-                                            <div class="row">
-                                                <label class="label-descricao col-md-1" for="crm">CRM: </label>
-                                                <p id="crm" class="col-md-6">{{ $medico->crm }}</p>
+                                        <div class="row">
+                                            <label class="label-descricao col-md-1" for="crm">CRM: </label>
+                                            <p id="crm" class="col-md-6">{{ $medico->crm }}</p>
 
-                                                <label class="label-descricao col-md-2" for="telefone">Telefone: </label>
-                                                <p id="telefone" class="col-md-3">{{ $medico->telefone }}</p>
-                                            </div>
-                                            <div class="row">
-                                                <label class="label-descricao col-md-4" for="especialidades">Especialidades: </label>
-                                                @foreach($medico->especialidades as $especialidade)
-                                                    <p id="especialidade" class="col-md-4">{{ $especialidade->descricao }}</p>
-                                                @endforeach
-                                            </div>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <form action = "{{route('medico.destroy', $medico->id)}}" method = "POST">
-                                            @csrf
-                                            <a class = "btn" href="{{route('medico.edit', $medico->id)}}"><img src="{{ asset('imagens/edit.png') }}" title="Editar"></a>
-                                            @method('DELETE')
-                                            <button type = "submit" class = "btn btn-link"><img src="{{ asset('imagens/delete.png') }}" title="Excluir"></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                            <label class="label-descricao col-md-2" for="telefone">Telefone: </label>
+                                            <p id="telefone" class="col-md-3">{{ $medico->telefone }}</p>
+                                        </div>
+                                        <div class="row">
+                                            <label class="label-descricao col-md-4" for="especialidades">Especialidades: </label>
+                                            @foreach($medico->especialidades as $especialidade)
+                                                <p id="especialidade" class="col-md-4">{{ $especialidade->descricao }}</p>
+                                            @endforeach
+                                        </div>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action = "{{route('medico.destroy', $medico->id)}}" method = "POST">
+                                        @csrf
+                                        <a class = "btn" href="{{route('medico.edit', $medico->id)}}"><img src="{{ asset('imagens/edit.png') }}" title="Editar"></a>
+                                        @method('DELETE')
+                                        <button type = "submit" class = "btn btn-link"><img src="{{ asset('imagens/delete.png') }}" title="Excluir"></button>
+                                    </form>
+                                </td>
+                            </tr>
                         @endif
                         </tbody>
                     </table>

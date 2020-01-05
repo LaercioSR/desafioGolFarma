@@ -24,10 +24,10 @@
         <div class="container content-tasknow">
             <div class="row justify-content-center">
                 <div class="col-md-7">
-                    <form class="form-inline my-2 my-lg-0" action="/medico/pesquisar" method = "GET">
+                    <form class="form-inline" action="/medico/pesquisa" method = "post">
                         @csrf
-                        <input class="form-control mr-sm-2 col-md-8" type="search" placeholder="Pesquisar CRM ou Nome" aria-label="pesquisar">
-                        <button class="btn btn-danger my-2 my-sm-0 col-md-3" type="submit">Pesquisar</button>
+                        <input class="form-control mr-sm-2 col-md-8" type="text" placeholder="Pesquisar CRM ou Nome" id="pesquisa" name="pesquisa"  value="">
+                        <button class="btn btn-danger col-md-3" type="submit">Pesquisar</button>
                     </form>
                 </div>
             </div>

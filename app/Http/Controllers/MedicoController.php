@@ -143,6 +143,13 @@ class MedicoController extends Controller
     }
 
     public function pesquisarMedico(Request $request) {
-        $medico = DB::table('medicos')->where('nome', $request->pesquisar)->orWhere('crm', $request->pesquisar);
+        //dd($request);
+        $medicoBusca = DB::table('medicos')->where('nome', $request->pesquisa)->orWhere('crm', $request->pesquisa)->get();
+        $medico = null;
+        if($medicoBusca->isNotEmpty()) {
+            $medico = Medico::findOrFail($medicoBusca->toArray()[0]->id);
+        }
+
+        return view('exibirMedico', compact('medico'));
     }
 }

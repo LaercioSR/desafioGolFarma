@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,4 +18,6 @@ Route::get('/', function () {
 });
 
 Route::resource('medico', 'MedicoController');
-Route::get('medico/pesquisar', 'MedicoController@pesquisarMedico');
+
+
+Route::post('/medico/pesquisa', 'MedicoController@pesquisarMedico');
