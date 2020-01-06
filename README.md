@@ -62,3 +62,10 @@ Com as dependências instaladas e banco de dados configurado corretamente, agora
 ```
 $ php artisan serve
 ```
+
+E acessar a aplicação web por:
+```
+localhost:8000
+```
+A documentação para as rodas da api você encontra [aqui](https://documenter.getpostman.com/view/9976096/SWLe7Tp7).
+
