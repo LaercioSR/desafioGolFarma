@@ -64,9 +64,16 @@ class MedicoController extends Controller
      */
     public function show($id)
     {
-        return response([
-            'data' => new MedicoResource(Medico::findOrFail($id))
-        ], 201);
+        try {
+            return new MedicoResource(Medico::findOrFail($id));
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'info' => 'error',
+                'result' => 'Nenhum médico foi encontrado com o ID informado',
+                'error' => $e->getMessage(),
+            ], 404);
+        }
     }
 
     /**
@@ -141,8 +148,6 @@ class MedicoController extends Controller
             $medico = Medico::findOrFail($medicoBusca->toArray()[0]->id);
         }
 
-        return response([
-            'data' => new MedicoResource($medico)
-        ], 201);
+        return new MedicoResource($medico);
     }
 }

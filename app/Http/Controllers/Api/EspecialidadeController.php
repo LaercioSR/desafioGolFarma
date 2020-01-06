@@ -27,8 +27,15 @@ class EspecialidadeController extends Controller
      */
     public function show($id)
     {
-        return response([
-            'data' => new EspecialidadeResource(Especialidade::findOrFail($id))
-        ], 201);
+        try {
+            return new EspecialidadeResource(Especialidade::findOrFail($id));
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'info' => 'error',
+                'result' => 'Nenhum médico foi encontrado com o ID informado',
+                'error' => $e->getMessage(),
+            ], 404);
+        }
     }
 }
