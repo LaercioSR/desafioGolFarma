@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Especialidade;
-use App\Medico;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\MedicoCollection;
+use App\Http\Resources\MedicoResource;
 use App\MedicoEspecialidade;
 use Illuminate\Http\Request;
+use App\Medico;
 use Illuminate\Support\Facades\DB;
 
 class MedicoController extends Controller
@@ -17,21 +19,7 @@ class MedicoController extends Controller
      */
     public function index()
     {
-        $medicos = Medico::all();
-
-        return view('welcome', compact('medicos'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $especialidades = Especialidade::all();
-
-        return view('cadastrarMedico', compact('especialidades'));
+        return new MedicoCollection(Medico::all());
     }
 
     /**
@@ -63,46 +51,48 @@ class MedicoController extends Controller
             $medicoEspecialidade->save();
         }
 
-        return redirect("/");
+        return response([
+            'data' => new MedicoResource($medico)
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Medico  $medico
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Medico $medico)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Medico  $medico
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $medico = Medico::findOrFail($id);
-        $especialidades = Especialidade::all();
-
-        return view('editarMedico', compact('medico'), compact('especialidades'));
+        return response([
+            'data' => new MedicoResource(Medico::findOrFail($id))
+        ], 201);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Medico  $medico
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Medico $medico)
+    public function update(Request $request, $id)
     {
-        $medico->nome = $request->input('nome');
-        $medico->crm = $request->input('crm');
-        $medico->telefone = $request->input('telefone');
+        $medico = Medico::findOrFail($id);
+
+
+        if($request->nome != null) {
+            $medico->nome = $request->input('nome');
+        }
+
+        if($request->crm != null) {
+            $medico->crm = $request->input('crm');
+        }
+
+        if($request->telefone != null) {
+            $medico->telefone = $request->input('telefone');
+        }
+
         $medico->save();
 
         $especialidades = DB::table('medico_especialidades')->where('idMedico', $medico->id)->get();
@@ -125,13 +115,15 @@ class MedicoController extends Controller
             $medicoEspecialidade->save();
         }
 
-        return redirect("/");
+        return response([
+            'data' => new MedicoResource($medico)
+        ], 201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Medico  $medico
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -139,7 +131,7 @@ class MedicoController extends Controller
         $medico = Medico::findOrFail($id);
         $medico->delete();
 
-        return redirect('/');
+        return response(null, 204);
     }
 
     public function pesquisarMedico(Request $request) {
@@ -149,6 +141,8 @@ class MedicoController extends Controller
             $medico = Medico::findOrFail($medicoBusca->toArray()[0]->id);
         }
 
-        return view('exibirMedico', compact('medico'));
+        return response([
+            'data' => new MedicoResource($medico)
+        ], 201);
     }
 }

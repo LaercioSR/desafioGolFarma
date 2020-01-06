@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::apiResource('medicos', 'Api\MedicoController');
+Route::post('/medicos/pesquisa', 'Api\MedicoController@pesquisarMedico');
+Route::get('/especialidades/{especialidade}', 'Api\EspecialidadeController@show');
+Route::get('/especialidades', 'Api\EspecialidadeController@index');

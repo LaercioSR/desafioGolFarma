@@ -63,7 +63,9 @@
                                 <select id="especialidade1" class="form-control" name="especialidade1" required>
                                     <option value="0">Especialidades 1...</option>
                                     @foreach($especialidades as $especialidade)
-                                        <option value="{{$especialidade->id}}">{{$especialidade->descricao}}</option>
+                                        <option value="{{$especialidade->id}}" @if($medico->especialidade1() == $especialidade->id)
+                                                                                    selected
+                                                                                @endif>{{$especialidade->descricao}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -73,7 +75,9 @@
                                 <select id="especialidade2" class="form-control" name="especialidade2" required>
                                     <option value="0">Especialidades 2...</option>
                                     @foreach($especialidades as $especialidade)
-                                        <option value="{{$especialidade->id}}">{{$especialidade->descricao}}</option>
+                                        <option value="{{$especialidade->id}}" @if($medico->especialidade2() == $especialidade->id)
+                                                                                    selected
+                                                                                @endif>{{$especialidade->descricao}}</option>
                                     @endforeach
                                 </select>
                             </div>

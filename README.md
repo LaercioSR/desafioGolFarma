@@ -1,6 +1,15 @@
+
+
+
+
+# Projeto GolFarma
+
+![Preview-Screens](https://github.com/LaercioSR/desafioGolFarma/blob/master/public/imagens/telas.png)
+
+
 ## Sobre o Projeto
 
-O projeto é um desafio da [GolFarma](https://golfarma.com.br/). Consiste num CRUD para cadastro de médicos.
+O projeto é um desafio da [GolFarma](https://golfarma.com.br/). Consiste num site web e numa api para um CRUD de médicos.
 
 ## Começando
 

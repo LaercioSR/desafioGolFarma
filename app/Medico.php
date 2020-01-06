@@ -13,4 +13,20 @@ class Medico extends Model
     public function medicoEspecialidades() {
         return $this->hasMany('App\MedicoEspecialidade', 'idMedico');
     }
+
+    public function especialidade1() {
+        if(count($this->especialidades) != 0 ) {
+            $especialidade = $this->especialidades[0]->id;
+            return $especialidade;
+        }
+        return 0;
+    }
+
+    public function especialidade2() {
+        if(count($this->especialidades) == 2) {
+            $especialidade = $this->especialidades[1]->id;
+            return $especialidade;
+        }
+        return 0;
+    }
 }
